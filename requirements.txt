@@ -1,0 +1,5 @@
+numpy==1.19.5
+torch==1.9.1+cu102
+torchvision==0.10.1+cu102
+flask==1.1.2
+werkzeug==1.0.1

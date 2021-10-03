@@ -1,0 +1,35 @@
+h1{
+	font-family: "Times New Roman", Times, serif;
+	text-align: center;
+	font-weight: bold;
+	font-size: 50px;
+	margin-top: 30px;
+}
+
+.mainphoto{
+	width: auto;
+	height: 300px;
+}
+.btnCheck{
+	width: 40%;
+}
+
+
+.yes{
+	width: 80%;
+}
+
+.no{
+	width: 80%;
+}
+
+
+.yesOp{
+	width: 80%;
+	opacity: 0.3;
+}
+
+.noOp{
+	width: 80%;
+	opacity: 0.3;
+}
