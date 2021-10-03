@@ -1,7 +1,10 @@
+-f https://download.pytorch.org/whl/torch_stable.html
 numpy==1.19.5
+Flask==1.1.2
+gunicorn==20.0.4
+requests==2.24.0
 torch==1.9.1+cu102
 torch-scatter==2.0.8
 torchaudio==0.9.1
 torchvision==0.10.1+cu102
-flask==1.1.2
-werkzeug==1.0.1
+Werkzeug==1.0.1
