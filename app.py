@@ -1,4 +1,5 @@
 import numpy as np
+import io
 import os
 import torch
 import torch.nn as nn
@@ -72,17 +73,18 @@ model = ConvNet(num_classes).to(device)
 model.to(device)
 
 model.load_state_dict(torch.load('Project.pkl'))
+model.eval()
 
 transform_test = transforms.Compose([
+    transforms.Grayscale(num_output_channels=1),
+    transforms.Resize((64,64)),
     transforms.ToTensor(),
     transforms.Normalize((0.5,), (0.5,))
 ])
 
-def model_predict(img_path, model):
-    img_file = Image.open(img_path).resize((64, 64))
-    img_grey = img_file.convert('L')
-    # img = transform_test(img_grey).cuda()
-    img = transform_test(img_grey)
+def model_predict(image_bytes, model):
+    img = Image.open(io.BytesIO(image_bytes))
+    img = transform_test(img)
     img = torch.unsqueeze(img, 0)
     images = img.to(device)
     outputs = model(images)
@@ -98,18 +100,13 @@ def index():
     return render_template('index.html')
     
 @app.route('/predict',methods = ['GET', 'POST'])
-# @app.route('/predict',methods = ['POST'])
 def predict():
     # Get the file from post request
-    f = request.files['file']
-
-    basepath = os.path.dirname(os.path.realpath('__file__'))
-    file_path = os.path.join(
-        basepath, 'uploads', secure_filename(f.filename))
-    f.save(file_path)
+    f = request.files.get('file')
+    img_bytes = f.read()
 
     # Make prediction
-    preds = model_predict(file_path, model)
+    preds = model_predict(img_bytes, model)
     return str(preds)
 
 if __name__ == "__main__":
